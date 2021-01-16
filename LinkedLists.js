@@ -8,34 +8,46 @@ class Node {
   }
 }
 class LinkedList {
-  constructor(age) {
-    this.head = node1;
-    this.length = userAge;
+  constructor(age, highlight) {
+    this.head = new Node(age, highlight);
   }
 
-  insert = (data) => {
+  insertBeginning = (age, highlight) => {
     const newNode = new Node(age, highlight, this.head);
     this.head = newNode;
   };
 
   traverse = () => {
-    let arrayData = [node1, node3, node7];
     let current = this.head;
     while (current) {
-      arrayData.push(current.data);
+      console.log(`Age: ${current.age}, highlight: ${current.highlight}`);
       current = current.next;
     }
-    return arrayData;
+  };
+  insertHighlights = (age) => {
+    let current = this.head;
+    while (current.age < age) {
+      let currentAge = current.age + 1;
+      if (current.next && current.next.age === currentAge) {
+        current = current.next;
+      } else {
+        let highlight = prompt(
+          `What was the highlight for age ${currentAge}? `
+        );
+        let newNode = new Node(currentAge, highlight, current.next);
+        current.next = newNode;
+        current = newNode;
+      }
+    }
   };
 }
 
-let userAge = prompt(`How old are you?`);
+const abul = new LinkedList(7, "My first shorts");
+abul.insertBeginning(3, "Started walking");
+abul.insertBeginning(1, "Bagan to crawl");
+abul.traverse();
 
-const node1 = new Node(1, "I was born");
-const node3 = new Node(3, "started walking");
-const node7 = new Node(7, "I turned seven");
+const age = prompt(`How old are you? `);
 
-let lifeDocumented = [node1, node3, node7];
-// prompt(`What was the highlight of your life when you were ${missingAge}`);
-
-console.log(traverse());
+abul.insertHighlights(age);
+abul.traverse();
