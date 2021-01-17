@@ -2,51 +2,52 @@ class Node {
   constructor(groupSize, next = null) {
     this.groupSize = groupSize;
     this.next = next;
-    this.limit = 12;
-    isCrowded = () => this.groupSize > this.limit;
-    splitUp = (groupSize) => {
-      while (this.isCrowded()) {
-        const newNode = new Node(groupSize);
-        this.groupSize = back.groupSize - 12;
-      }
-    };
-    this.groupSize = 12;
   }
 }
 
 class Queue {
-  constructor(limit) {
+  constructor(limit = 5) {
     this.front = null;
     this.back = null;
     this.length = 0;
     this.limit = limit;
+    this.waitingTime = 0;
   }
 
   isFull = () => this.length === this.limit;
 
   isEmpty = () => this.length === 0;
 
-  peek = () => (this.isEmpty() ? `Queue Underflow` : this.front.data);
+  peek = () => this.waitingTime;
 
-  enqueue = () => {
+  addNode = (groupSize) => {
+    const newNode = new Node(groupSize);
+    if (this.isEmpty()) this.front = newNode;
+    else this.back.next = newNode;
+
+    this.back = newNode;
+    this.length++;
+    this.waitingTime += groupSize * 0.5;
+  };
+
+  enqueue = (groupSize) => {
     if (this.isFull()) {
-      console.log("Queue Overflow");
+      console.log(
+        `Currently busy, try our other attractions and come back in ${this.waitingTime}`
+      );
     } else {
-      const newNode = new Node(groupSize);
-      if (this.isEmpty()) {
-        this.front = newNode;
-        this.back = newNode;
-      } else {
-        this.back.next = newNode;
-        this.back = newNode;
+      let peopleNum = groupSize;
+      while (peopleNum > 12) {
+        this.addNode(12);
+        peopleNum -= 12;
       }
-      this.length++;
+      this.addNode(peopleNum);
     }
   };
 
   dequeue = () => {
     if (this.isEmpty()) {
-      console.log("Queue Underflow");
+      console.log("It's empty at the moment.");
     } else {
       const removed = this.front;
       if (this.length === 1) {
@@ -56,29 +57,32 @@ class Queue {
         this.front = removed.next;
       }
       this.length--;
+      this.waitingTime -= removed.groupSize * 0.5;
       return removed.groupSize;
     }
   };
 }
 
-const rideQ = new Queue();
-rideQTime = () => rideQ[0] * 0.5;
+const ridePark = new Queue();
+console.log(`___
 
-// while (rideQ.groupSize > 12) {
-//   let rideQ = 12;
-//   rideQ.enqueue(this.groupSize - 12);
-// }
+Waiting time is ====> ${ridePark.peek()} minutes
+___`);
+ridePark.enqueue(5);
+ridePark.enqueue(2);
+ridePark.enqueue(3);
+ridePark.enqueue(17);
+console.log(`___
 
-console.log(`Current queue time is ${rideQTime(rideQ)} minutes.`);
+Waiting time is ====> ${ridePark.peek()} minutes
+___`);
+console.log(
+  `
+  
+  The number of people leaving the queue right now is: ${ridePark.dequeue()}
+  `
+);
+console.log(`___
 
-rideQ.enqueue(3);
-rideQ.enqueue(11);
-rideQ.enqueue(4);
-rideQ.enqueue(25);
-
-console.log(`Current queue time is ${rideQTime(rideQ)} minutes.`);
-// console.log(rideQ.peek());
-// console.log(rideQ.dequeue());
-// console.log(rideQ.peek());
-
-console.log(rideQ);
+Waiting time is ====> ${ridePark.peek()} minutes
+___`);
