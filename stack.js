@@ -4,7 +4,7 @@ class Node {
     this.number = number;
     this.next = next;
   }
-  getData() => 
+  getData = () => `${this.color} - ${this.number}`;
 }
 
 class Stack {
@@ -18,13 +18,13 @@ class Stack {
 
   isEmpty = () => this.length === 0;
 
-  peek = () => (this.isEmpty() ? "Empty deck, sorrry!" : this.top.data);
+  peek = () => (this.isEmpty() ? "Empty deck, sorrry!" : this.top.getData);
 
   push = (color, number) => {
     if (this.isFull()) {
-      console.log("Eww, the stack is full. Go away!");
+      console.log("Fully stacked, go away!");
     } else {
-      const newNode = new Node(data, this.top);
+      const newNode = new Node(color, number, this.top);
       this.top = newNode;
       this.length++;
     }
@@ -32,57 +32,37 @@ class Stack {
 
   pop = () => {
     if (this.isEmpty()) {
-      console.log("What else do you wanna take from me? I have nothing left!");
+      console.log(`Opps, no more cards!`);
     } else {
       const popped = this.top;
       this.top = popped.next;
       this.length--;
-      return popped.data;
+      return popped.getData;
     }
   };
 }
 
-// const chickenFillet = new Stack(5);
-// chickenFillet.push("bottom bun");
-// console.log("Peak: ", chickenFillet.peek());
-// chickenFillet.push("mayo");
-// console.log("Peak: ", chickenFillet.peek());
-// chickenFillet.push("chicken");
-// console.log("Peak: ", chickenFillet.peek());
-// chickenFillet.push("cole slaw");
-// console.log("Peak: ", chickenFillet.peek());
-// chickenFillet.push("pickles");
-// console.log("Peak: ", chickenFillet.peek());
-// console.log(chickenFillet.pop());
-// console.log("Peak: ", chickenFillet.peek());
-// chickenFillet.push("top bun");
-// console.log("Peak: ", chickenFillet.peek());
+const colors = ["Blue", "Green", "Red", "Yellow"];
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const colors = []
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-const deck = new Stack()
-const random = (array){
-    const randomIndex = 
-}
+const deck = new Stack(20);
+const random = (array) => {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+};
+// do {
+//   deck.push(colors, numbers);
+// } while (deck.isFull() != 1);
 
-console.log(`-------------------------
-${player1}:
--------------------------
-1- Yellow-1
-2- Yellow-2
-3- Red-2
-4- Blue-8
-5- Yellow-7
--------------------------
-${player2}:
--------------------------
-1- Blue-1
-2- Yellow-2
-3- Red-6
-4- Blue-8
-5- Red-9
+const player1 = [];
 
+do {
+  const newCard = deck.pop();
+} while (player1.length < 4);
 
--------------------------
-First card in deck: ${peek(this.top.data)}
--------------------------`);
+// push(newCard);
+// do {
+//   player1.push(deck);
+// } while (player1.isFull() != 1);
+
+console.log(player1);
