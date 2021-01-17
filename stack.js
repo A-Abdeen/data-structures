@@ -4,7 +4,7 @@ class Node {
     this.number = number;
     this.next = next;
   }
-  getData = () => `${this.color} - ${this.number}`;
+  getData = () => ` ${this.number} ${this.color} `;
 }
 
 class Stack {
@@ -18,7 +18,7 @@ class Stack {
 
   isEmpty = () => this.length === 0;
 
-  peek = () => (this.isEmpty() ? "Empty deck, sorrry!" : this.top.getData);
+  peek = () => (this.isEmpty() ? "Empty deck, sorrry!" : this.top.getData());
 
   push = (color, number) => {
     if (this.isFull()) {
@@ -37,7 +37,7 @@ class Stack {
       const popped = this.top;
       this.top = popped.next;
       this.length--;
-      return popped.getData;
+      return popped.getData();
     }
   };
 }
@@ -50,19 +50,35 @@ const random = (array) => {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
 };
-// do {
-//   deck.push(colors, numbers);
-// } while (deck.isFull() != 1);
 
-const player1 = [];
+while (!deck.isFull()) {
+  let color = random(colors);
+  let number = random(numbers);
+  deck.push(color, number);
+}
+let playerCards = 5;
+let player1Cards = [];
+let player2Cards = [];
 
-do {
-  const newCard = deck.pop();
-} while (player1.length < 4);
+for (let i = 0; i < 5; i++) {
+  player1Cards.push(deck.pop());
+  player2Cards.push(deck.pop());
+}
 
-// push(newCard);
-// do {
-//   player1.push(deck);
-// } while (player1.isFull() != 1);
+console.log(`
+----------------------------------------------
+Player 1's hand:
+----------------------------------------------
 
-console.log(player1);
+${player1Cards}
+
+----------------------------------------------
+Player 2's hand:
+----------------------------------------------
+
+${player2Cards}
+
+----------------------------------------------
+First card in deck: ${deck.peek()}
+----------------------------------------------
+`);
