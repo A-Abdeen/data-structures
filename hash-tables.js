@@ -7,6 +7,8 @@ class HashTable {
   }
 }
 
+hash = this.classes;
+
 // filter = (score) =>
 //   (hash = (score) => {
 //     const score = students.find((score) => students.score);
@@ -95,7 +97,7 @@ const students = [
 ];
 
 const studentName = students.find((student) => student.name);
-console.log(studentName(Diego));
+console.log(studentName());
 
 // console.table(find.students());
 // console.log(students[0]);
