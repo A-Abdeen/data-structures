@@ -7,43 +7,39 @@ class HashTable {
   }
 }
 
-hash = this.classes;
+hash = (score) => {
+  if (score >= 90) {
+    return "A";
+  } else if (score >= 80) {
+    return "B";
+  } else if (score >= 70) {
+    return "C";
+  } else if (score >= 60) {
+    return "D";
+  } else {
+    return "Other";
+  }
 
-// filter = (score) =>
-//   (hash = (score) => {
-//     const score = students.find((score) => students.score);
-//   });
-
-// const classA = students.filter((element) => element.score >= 90);
-// console.log(classA);
-// const classB = students.filter((element) => 90 > element.score >= 80);
-// console.log(classB);
-// const classC = students.filter((element) => 80 > element.score >= 70);
-// console.log(classC);
-// const classD = students.filter((element) => 70 > element.score >= 60);
-// console.log(classD);
-// const noClass = students.filter((element) => element.score < 60);
-// console.log(noClass);
+  insert = (name, score) => {
+    const classRoom = this.hash(score);
+    if (this.classes[classroom].length < this.classSize) {
+      this.classes[classRoom].push({ name, score });
+    } else {
+      console.log(`Class already reached limit.`);
+    }
+  };
+};
 
 compress = (hashCode) => {
   return hashCode;
 };
 
-insert = (name, score) => {
-  let collisionCount = 0;
-  while (true) {
-    const hashCode = this.hash(name, collisionCount);
-    const index = this.compress(hashCode);
-
-    let currentValue = this.array[index];
-    if (!currentScore || currentValue[0] === name) {
-      this.array[index] = [name, score];
-      break;
-    } else {
-      collisionCount++;
-    }
-  }
-};
+let currentValue = this.array[index];
+if (!currentScore || currentValue[0] === name) {
+  this.array[index] = [name, score];
+} else {
+  collisionCount++;
+}
 
 lookup = (key) => {
   let collisionCount = 0;
@@ -96,8 +92,7 @@ const students = [
   { name: "Diego Mayer", score: 100 },
 ];
 
-const studentName = students.find((student) => student.name);
-console.log(studentName());
-
+console.log(object.entries(students));
+// for...in(students)
 // console.table(find.students());
 // console.log(students[0]);
