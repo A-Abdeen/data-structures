@@ -4,16 +4,19 @@ const numbers = [
   [4, 2, [6, 7, [2, 6, 1]]],
 ];
 
+// Flatten array using flat
+
+const fNum = numbers.flat(7);
+
 // Add base case
-numSum = (numbers) => {
-  if (numbers.length === 1) {
-    return numbers[0];
+sum = (fNum) => {
+  if (fNum.length === 1) {
+    return fNum[0];
   }
   // Add reculsive case
   else {
-    return (
-      numbers[numbers.length - 1] + sum(number.slice(0, number.length - 1))
-    );
+    return fNum[fNum.length - 1] + sum(fNum.slice(0, fNum.length - 1));
   }
 };
-console.log(numSum());
+
+console.log(sum(fNum));
