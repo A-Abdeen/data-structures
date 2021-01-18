@@ -1,3 +1,5 @@
+const prompt = require("prompt-sync")({ sigint: true });
+
 class TreeNode {
   constructor(data) {
     this.data = data;
