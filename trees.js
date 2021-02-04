@@ -1,46 +1,60 @@
 const prompt = require("prompt-sync")({ sigint: true });
 
 class TreeNode {
-  constructor(name, parent, limit) {
+  constructor(name) {
     this.name = name;
-    this.parent = parent;
     this.children = [];
-    this.limit = limit;
   }
 
-  addChild = (name, parent) => {
-    name = prompt(`Who are you, Great child of Badam?  `);
-    parent = prompt(`Where do you come from, ${name}?  `);
-    this.children.push({ name, parent });
+  addChild = (node) => {
+    if (this.children.length < 2) {
+      this.children.push(node);
+      console.log(`${node.name} child of ${this.name}`);
+    } else {
+      console.log("Orphan");
+    }
   };
 
-  removeChild = (node) => {
-    this.children = this.children.filter((name) => child !== node);
+  getChildWithName = (name) => {
+    return this.children.find((child) => child.name === name);
   };
 
   traverse = () => {
-    if (this.name === parent) console.log(`OKAY`);
-    // nodes = [...nodes, ...current.children];
+    let nodes = [this];
+    while (nodes.length > 0) {
+      let current = nodes.pop();
+      console.log(current.name);
+      nodes = [...nodes, ...current.children];
+    }
   };
 }
 
-// console.table();
+const root = new TreeNode("GreatBadam");
+let fullName = prompt("Enter child name or type done: ");
 
-const root = new TreeNode("Great", "Badam", 2);
-// const child1 = new TreeNode("Luke Skywalker");
-// const child2 = new TreeNode("Leia Organa");
-// const child3 = new TreeNode("Kylo Ren");
+while (fullName !== "done") {
+  let current = root;
+  let names = fullName.split(` `).reverse(); // To start at root
+  let firstName = names.pop();
+  let lastName = names.shift();
 
-root.addChild();
-// root.addChild();
-// root.traverse();
-// root.addChild();
-// root.addChild();
-// root.addChild();
-
-// root.addChild(child2);
-// child2.addChild(child3);
-// root.removeChild(child2);
-
-// root.traverse();
-console.table(root);
+  if (lastName === current.name) {
+    if (names) {
+      for (let name of names) {
+        let child = current.getChildWithName(name);
+        if (child) {
+          current = child;
+        } else {
+          let newNode = new TreeNode(name);
+          current.addChild(newNode);
+          current = newNode;
+        }
+      }
+    }
+    let newNode = new TreeNode(firstName);
+    current.addChild(newNode);
+  }
+  console.log("---------------------------------------------------");
+  fullName = prompt("Enter child name or type done: ");
+}
+root.traverse();
